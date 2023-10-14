@@ -1,0 +1,30 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rust CLI on Web</title>
+    <script type="module">
+        import init, { greet } from "./rust_wasm_lib/pkg/rust_wasm_lib.js";
+
+        async function runRustFunction() {
+            await init();
+            const inputName = document.getElementById("nameInput").value;
+            const result = greet(inputName);
+            document.getElementById("output").innerText = result;
+        }
+
+        // Assign the function to the global object
+        window.runRustFunction = runRustFunction;
+    </script>
+</head>
+<body>
+    <h1>Rust CLI on Web</h1>
+    <h3>Enter a name and click the button to run the Rust function</h3>
+    <h4>文字に"Hello,"を付け加える処理はRustにより記述され、WASMが動いています！</h4>
+    <input type="text" id="nameInput" placeholder="Enter a name">
+    <button onclick="runRustFunction()">Run Rust Function</button>
+    <pre id="output"></pre>
+</body>
+</html>
